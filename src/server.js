@@ -25,7 +25,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://127.0.0.1:5173/",
-      "https://api-foodexplorer-sata.onrender.com",
+      "https://foodexplorer-pedrodecf.netlify.app",
     ],
     credentials: true,
   })
