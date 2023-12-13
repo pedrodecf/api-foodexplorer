@@ -12,10 +12,13 @@ class ItemsController {
       throw new AppError("Por favor, adicione ao menos um ingrediente.")
     }
 
-    const { lastID: id_items } = await db.run(
-      "INSERT INTO items (name, img, category, price, description) VALUES (?, ?, ?, ?, ?)",
-      [name, img, category, price, description]
-    )
+    const { lastID: id_items } = await db.run("INSERT INTO items (name, img, category, price, description) VALUES (?, ?, ?, ?, ?)", [
+      name,
+      img,
+      category,
+      price,
+      description,
+    ])
 
     if (ingredients) {
       const ingredientsInsert = ingredients.map((name) => {
@@ -26,10 +29,7 @@ class ItemsController {
       })
 
       for (const ingredient of ingredientsInsert) {
-        await db.run("INSERT INTO ingredients (name, id_items) VALUES (?, ?)", [
-          ingredient.name,
-          ingredient.id_items,
-        ])
+        await db.run("INSERT INTO ingredients (name, id_items) VALUES (?, ?)", [ingredient.name, ingredient.id_items])
       }
     }
 
@@ -42,10 +42,7 @@ class ItemsController {
 
     const db = await sqliteConnection()
     const item = await db.get("SELECT * FROM items WHERE id = (?)", [id])
-    let oldIngredients = await db.all(
-      "SELECT name FROM ingredients WHERE id_items = (?)",
-      [id]
-    )
+    let oldIngredients = await db.all("SELECT name FROM ingredients WHERE id_items = (?)", [id])
 
     oldIngredients = oldIngredients.map((names) => names.name)
 
@@ -84,10 +81,7 @@ class ItemsController {
         await db.run("DELETE FROM ingredients WHERE id_items = ?", [id])
 
         for (const ingredient of ingredientsInsert) {
-          await db.run(
-            "INSERT INTO ingredients (name, id_items) VALUES (?, ?)",
-            [ingredient.name, id]
-          )
+          await db.run("INSERT INTO ingredients (name, id_items) VALUES (?, ?)", [ingredient.name, id])
         }
       }
     }
@@ -109,10 +103,7 @@ class ItemsController {
     const { id } = req.params
     const db = await sqliteConnection()
     const item = await db.get("SELECT * FROM items WHERE id = (?)", [id])
-    const ingredients = await db.all(
-      "SELECT * FROM ingredients WHERE id_items = (?)",
-      [id]
-    )
+    const ingredients = await db.all("SELECT * FROM ingredients WHERE id_items = (?)", [id])
 
     return res.json({ ...item, ingredients })
   }

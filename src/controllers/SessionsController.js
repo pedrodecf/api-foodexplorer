@@ -26,16 +26,16 @@ class SessionsController {
       expiresIn,
     })
 
-    delete user.password
-
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "None",
       secure: true,
       maxAge: 60 * 60 * 1000,
     })
 
-    return res.json({ user })
+    delete user.password
+
+    return res.status(201).json({ user })
   }
 }
 

@@ -6,6 +6,7 @@ function ensureAuthenticate(req, res, next) {
   const authHeader = req.headers
 
   if (!authHeader.cookie) {
+    alert("Ensure Authenticate: JWT Token não informado.")
     throw new AppError("JWT Token não informado.", 401)
   }
 
