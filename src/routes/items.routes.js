@@ -15,7 +15,7 @@ const ImgController = require("../controllers/ImgController")
 const itemsController = new ItemsController()
 const imgController = new ImgController()
 
-// itemsRoutes.use(ensureAuthenticate)
+itemsRoutes.use(ensureAuthenticate)
 
 itemsRoutes.post("/", verifyUserAuthorization("admin"), itemsController.create)
 itemsRoutes.put("/:id", verifyUserAuthorization("admin"), itemsController.update)
