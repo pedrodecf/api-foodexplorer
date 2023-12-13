@@ -15,28 +15,30 @@ const ImgController = require("../controllers/ImgController")
 const itemsController = new ItemsController()
 const imgController = new ImgController()
 
-itemsRoutes.post("/", ensureAuthenticate, verifyUserAuthorization("admin"), itemsController.create)
+itemsRoutes.use(ensureAuthenticate)
+
+itemsRoutes.post("/", verifyUserAuthorization("admin"), itemsController.create)
 itemsRoutes.put(
   "/:id",
-  ensureAuthenticate, verifyUserAuthorization("admin"),
+  verifyUserAuthorization("admin"),
   itemsController.update
 )
 itemsRoutes.delete(
   "/:id",
-  ensureAuthenticate, verifyUserAuthorization("admin"),
+  verifyUserAuthorization("admin"),
   itemsController.delete
 )
 itemsRoutes.get("/:id", itemsController.show)
 itemsRoutes.get("/", itemsController.index)
 itemsRoutes.patch(
   "/img/:id",
-  ensureAuthenticate, upload.single("img"),
+  upload.single("img"),
   verifyUserAuthorization("admin"),
   imgController.update
 )
 itemsRoutes.patch(
   "/img",
-  ensureAuthenticate, upload.single("img"),
+  upload.single("img"),
   verifyUserAuthorization("admin"),
   imgController.create
 )
