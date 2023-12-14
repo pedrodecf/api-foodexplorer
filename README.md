@@ -69,3 +69,5 @@ Isso iniciará o servidor na porta default (3333), mas você pode configurar a p
 
 > [!TIP]
 > A dependência pm2 foi instalada para que a aplicação se mantenha online mesmo se ocorrer algum erro interno.
+
+## [Front-end](https://github.com/pedrodecf/web-foodexplorer)
